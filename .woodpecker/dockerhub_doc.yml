@@ -1,0 +1,19 @@
+---
+variables:
+  - &file README.md
+  - &repo bksolutions/fpdf2
+
+steps:
+  update_doc:
+    when:
+      event: [push]
+      path:
+        include: ['*.md', '.woodpecker/dockerhub_doc.yml']
+    image: peterevans/dockerhub-description:3
+    environment:
+      DOCKERHUB_USERNAME:
+        from_secret: DOCKER_BKSOL_USER
+      DOCKERHUB_PASSWORD: 
+        from_secret: DOCKER_BKSOL_PASS
+      DOCKERHUB_REPOSITORY: *repo
+      README_FILEPATH: *file
