@@ -3,7 +3,7 @@ variables:
   - &file Dockerfile
   - &dhub https://index.docker.io/v1/
   - &arch linux/arm/v7,linux/arm64/v8,linux/amd64
-  - &repo bksolutions/holdingnuts
+  - &repo bksolutions/fpdf2
 
 steps:
   build_n_push:
