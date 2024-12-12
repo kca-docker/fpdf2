@@ -6,9 +6,11 @@ variables:
 steps:
   update_doc:
     when:
-      event: [push]
-      path:
-        include: ['*.md', '.woodpecker/dockerhub_doc.yml']
+      - event: [push]
+        path:
+          include: ['*.md', '.woodpecker/dockerhub_doc.yml']
+      - event: [manual]
+        branch: main
     image: peterevans/dockerhub-description:3
     environment:
       DOCKERHUB_USERNAME:
