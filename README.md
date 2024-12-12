@@ -17,6 +17,7 @@
   - [Usage](#usage)
     - [Volume(s)](#volumes)
     - [Description](#description)
+      - [Parameter](#parameter)
   - [Default python script example](#default-python-script-example)
 - [Find Us](#find-us)
 - [Versioning](#versioning)
@@ -52,6 +53,16 @@ $ docker run -d --rm --name fpdf -v $PWD/<code>:/usr/src/fpdf:rw bksolutions/fpd
 ```shell
 $ podman run -d --rm --name fpdf -v $PWD/<code>:/usr/src/fpdf:Z bksolutions/fpdf2
 ```
+
+#### Parameter
+
+* `-d`    - Detached mode: run the container in the background
+* `-rm`   - Automatically remove the container
+* `-name` - Assign a name to the container
+* `-v`    - Create a bind mount
+  The *options* are:
+    * `rw` - Read/Write
+    * `Z` - private unshared label only the current container can use a private volume
 
 ## Default python script example
 
