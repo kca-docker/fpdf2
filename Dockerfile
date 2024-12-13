@@ -1,6 +1,6 @@
 ARG IMAGE=python:3-alpine
 ARG BASEFOLDER=/usr/src
-ARG APP=fptf2
+ARG APP=fpdf2
 ARG APPFOLDER=${BASEFOLDER}/${APPFOLDER}
 
 
