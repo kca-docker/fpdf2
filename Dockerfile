@@ -15,6 +15,7 @@ WORKDIR ${BASEFOLDER}
 RUN apk add --update \
     gcc \
     musl-dev \
+    zlib \
     linux-headers
 
 RUN python -m ensurepip --upgrade
