@@ -6,17 +6,11 @@ ARG APPFOLDER=${BASEFOLDER}/${APPFOLDER}
 
 
 
-FROM ${IMAGE} AS BUILDER
+FROM python:3 AS BUILDER
 ARG BASEFOLDER
 ARG APP
 
 WORKDIR ${BASEFOLDER}
-
-RUN apk add --update \
-    gcc \
-    musl-dev \
-    zlib \
-    linux-headers
 
 RUN python -m ensurepip --upgrade
 RUN python -m venv ${APP}
@@ -39,4 +33,4 @@ WORKDIR ${APPFOLDER}
 
 COPY *.py .
 
-CMD [ "python", "./run.py" ]
+CMD [ "python", "bin/python run.py" ]
