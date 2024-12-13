@@ -23,6 +23,7 @@ RUN python -m venv ${APP}
 COPY requirements.txt .
 
 RUN source ${APP}/bin/activate
+RUN pip install wheel && pip wheel .
 RUN pip install -r requirements.txt
 
 
