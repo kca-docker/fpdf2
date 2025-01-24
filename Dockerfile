@@ -25,7 +25,7 @@ ARG APPFOLDER
 WORKDIR ${APPFOLDER}
 
 COPY --from=builder /wheels /wheels
-RUN pip install --no-cache /wheels/* -r requirements
+RUN pip install --no-cache /wheels/*
 
 COPY *.py .
 
