@@ -14,7 +14,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 COPY requirements.txt .
-RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.txt
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /wheels -r requirements.txt
 
 
 
@@ -24,8 +24,7 @@ ARG APPFOLDER
 
 WORKDIR ${APPFOLDER}
 
-COPY --from=builder /app/wheels /wheels
-
+COPY --from=builder /wheels /wheels
 RUN pip install --no-cache /wheels/* -r requirements
 
 COPY *.py .

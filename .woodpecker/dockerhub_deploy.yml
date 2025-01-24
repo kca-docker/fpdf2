@@ -2,7 +2,7 @@
 variables:
   - &file Dockerfile
   - &dhub https://index.docker.io/v1/
-  - &arch linux/arm/v7,linux/amd64
+  - &arch linux/amd64,linux/386,linux/arm/v7,linux/arm64/v8
   - &repo bksolutions/fpdf2
 
 steps:
@@ -22,7 +22,7 @@ steps:
       repo: *repo
       tags: 
         - 'latest'
-        - '0.0.1'
+        - '0.0.2'
       registry: *dhub
       logins:
         - registry: *dhub
