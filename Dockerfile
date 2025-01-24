@@ -23,6 +23,10 @@ ARG APPFOLDER=${BASEFOLDER}/${APP}
 #COPY requirements.txt .
 #RUN pip wheel --no-cache-dir --no-deps --wheel-dir /wheels -r requirements.txt
 
+##With in image
+#COPY --from=builder /wheels /wheels
+#RUN pip install --no-cache /wheels/*
+
 
 
 
@@ -31,10 +35,11 @@ ARG APPFOLDER
 
 WORKDIR ${APPFOLDER}
 
-RUN apk add --no-cache py3-pillow
+RUN apk add --no-cache \
+  py3-pillow  \
+  py3_wheel
 
-#COPY --from=builder /wheels /wheels
-#RUN pip install --no-cache /wheels/*
+
 COPY requirements.txt .
 RUN pip install --no-cache -r requirements.txt
 
