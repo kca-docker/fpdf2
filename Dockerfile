@@ -1,4 +1,4 @@
-ARG IMAGE=python:3-alpine
+ARG IMAGE=python:3.12-alpine
 ARG BASEFOLDER=/opt
 ARG APP=fpdf2
 ARG APPFOLDER=${BASEFOLDER}/${APP}
@@ -6,26 +6,24 @@ ARG APPFOLDER=${BASEFOLDER}/${APP}
 
 
 
-#FROM ${IMAGE} AS builder
+FROM ${IMAGE} AS builder
 
-#WORKDIR /app
+WORKDIR /app
 
-#ENV PYTHONDONTWRITEBYTECODE 1
-#ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 ##RUN pip install --upgrade pip
 
 ##RUN apk add --no-cache jpeg-dev zlib-dev
 ##RUN apk add --no-cache --virtual .build-deps build-base linux-headers
 
-#RUN apk add --no-cache py3-pillow
+RUN apk add --no-cache \
+      py3-pillow \
+      py3-wheel
 
-#COPY requirements.txt .
-#RUN pip wheel --no-cache-dir --no-deps --wheel-dir /wheels -r requirements.txt
-
-##With in image
-#COPY --from=builder /wheels /wheels
-#RUN pip install --no-cache /wheels/*
+COPY requirements.txt .
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /wheels -r requirements.txt
 
 
 
@@ -35,19 +33,15 @@ ARG APPFOLDER
 
 WORKDIR ${APPFOLDER}
 
+RUN apk add --no-cache \
+      py3-pillow \
+      py3-wheel
+
 COPY requirements.txt .
-RUN apk add --update --no-cache --virtual .tmp \
-      gcc \
-      jpeg-dev \
-      libc-dev \
-      linux-headers \
-      zlib-dev \
-&&  apk add libjpeg \
-&&  pip install --no-cache -r requirements.txt \
-&&  apk del .tmp \
-&&  rm requirements.txt
+COPY --from=builder /wheels /wheels
+RUN pip install --no-cache /wheels/*
 
 COPY *.py .
 
-ENTRYPOINT [ "python"]
+ENTRYPOINT ["python"]
 CMD ["example.py"]
