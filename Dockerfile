@@ -35,13 +35,17 @@ ARG APPFOLDER
 
 WORKDIR ${APPFOLDER}
 
-RUN apk add --no-cache \
-  py3-pillow  \
-  py3_wheel
-
-
 COPY requirements.txt .
-RUN pip install --no-cache -r requirements.txt
+RUN apk add --update --no-cache --virtual .tmp \
+      gcc \
+      jpeg-dev \
+      libc-dev \
+      linux-headers \
+      zlib-dev \
+&&  apk add libjpeg \
+&&  pip install --no-cache -r requirements.txt
+&&  apk del .tmp \
+&&  rm requirements.txt
 
 COPY *.py .
 
