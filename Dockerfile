@@ -43,7 +43,7 @@ RUN apk add --update --no-cache --virtual .tmp \
       linux-headers \
       zlib-dev \
 &&  apk add libjpeg \
-&&  pip install --no-cache -r requirements.txt
+&&  pip install --no-cache -r requirements.txt \
 &&  apk del .tmp \
 &&  rm requirements.txt
 
