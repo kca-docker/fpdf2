@@ -6,36 +6,25 @@ ARG APPFOLDER=${BASEFOLDER}/${APP}
 
 
 
-#FROM ${IMAGE} AS builder
-
-#WORKDIR /app
-
-#ENV PYTHONDONTWRITEBYTECODE 1
-#ENV PYTHONUNBUFFERED 1
-
-##RUN pip install --upgrade pip
-
-##RUN apk add --no-cache jpeg-dev zlib-dev
-##RUN apk add --no-cache --virtual .build-deps build-base linux-headers
-
-#RUN apk add --no-cache \
-#      py3-pillow \
-#      py3-wheel
-
-#COPY requirements.txt .
-#RUN pip wheel --no-cache-dir --no-deps --wheel-dir /wheels -r requirements.txt
-
-
-
-
 FROM ${IMAGE}
 ARG APPFOLDER
 
 WORKDIR ${APPFOLDER}
 
-RUN apk add --no-cache py3-fpdf
+RUN apk add --update --no-cache --virtual .tmp \  # Install virual package for pip install
+      gcc \
+      jpeg-dev \
+      libc-dev \
+      linux-headers \
+      zlib-dev \
+&&  apk add libjpeg \                              # Install required package(s)
+&&  pip install --no-cache -r requirements.txt \   # Install pip package(s) by requirements.txt
+&&  apk del .tmp \                                 # Remove virtual package
+&&  rm requirements.txt                            # Remove requirements.txt
 
+## Copy template script(s) to image 
 COPY *.py .
 
+## Define entrypoint with default arg: python example.py
 ENTRYPOINT ["python"]
 CMD ["example.py"]
