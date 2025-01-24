@@ -1,37 +1,34 @@
 ARG IMAGE=python:3-alpine
-ARG BASEFOLDER=/usr/src
+ARG BASEFOLDER=/opt
 ARG APP=fpdf2
-ARG APPFOLDER=${BASEFOLDER}/${APPFOLDER}
+ARG APPFOLDER=${BASEFOLDER}/${APP}
 
 
 
 
-FROM python:3 AS builder
-ARG BASEFOLDER
-ARG APP
-ARG APPFOLDER
+FROM ${IMAGE} AS builder
 
-WORKDIR ${BASEFOLDER}
+WORKDIR /app
 
-RUN python -m ensurepip --upgrade
-RUN python -m venv ${APP}
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 COPY requirements.txt .
-
-RUN source ${APPFOLDER}/bin/activate
-RUN pip install -r requirements.txt
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.txt
 
 
 
 
 FROM ${IMAGE}
-ARG BASEFOLDER
 ARG APPFOLDER
-
-COPY --from=builder ${APPFOLDER} ${BASEFOLDER}
 
 WORKDIR ${APPFOLDER}
 
+COPY --from=builder /app/wheels /wheels
+
+RUN pip install --no-cache /wheels/* -r requirements
+
 COPY *.py .
 
-CMD [ "python", "bin/python run.py" ]
+ENTRYPOINT [ "python"]
+CMD ["run.py"]
