@@ -1,2 +1,1 @@
-Pillow
 fpdf2>=2.8.1
