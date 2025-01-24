@@ -35,6 +35,7 @@ RUN apk add --no-cache py3-pillow
 
 #COPY --from=builder /wheels /wheels
 #RUN pip install --no-cache /wheels/*
+COPY requirements.txt .
 RUN pip install --no-cache -r requirements.txt
 
 COPY *.py .
