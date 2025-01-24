@@ -13,6 +13,8 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+RUN pip install --upgrade install --upgrade pip Pillow
+
 COPY requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /wheels -r requirements.txt
 
@@ -25,7 +27,7 @@ ARG APPFOLDER
 WORKDIR ${APPFOLDER}
 
 COPY --from=builder /wheels /wheels
-RUN pip install --no-cache /wheels/*
+RUN pip install --no-cache --upgrade pip Pillow /wheels/*
 
 COPY *.py .
 
