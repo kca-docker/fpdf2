@@ -1,4 +1,4 @@
-ARG IMAGE=python:3.12-alpine
+ARG IMAGE=python:3-alpine
 ARG BASEFOLDER=/opt
 ARG APP=fpdf2
 ARG APPFOLDER=${BASEFOLDER}/${APP}
