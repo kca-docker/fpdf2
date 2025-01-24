@@ -11,16 +11,16 @@ ARG APPFOLDER
 
 WORKDIR ${APPFOLDER}
 
-RUN apk add --update --no-cache --virtual .tmp \  # Install virual package for pip install
+RUN apk add --update --no-cache --virtual .tmp \
       gcc \
       jpeg-dev \
       libc-dev \
       linux-headers \
       zlib-dev \
-&&  apk add libjpeg \                              # Install required package(s)
-&&  pip install --no-cache -r requirements.txt \   # Install pip package(s) by requirements.txt
-&&  apk del .tmp \                                 # Remove virtual package
-&&  rm requirements.txt                            # Remove requirements.txt
+&&  apk add libjpeg \
+&&  pip install --no-cache -r requirements.txt \
+&&  apk del .tmp \
+&&  rm requirements.txt
 
 ## Copy template script(s) to image 
 COPY *.py .
