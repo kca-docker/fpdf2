@@ -11,6 +11,7 @@ ARG APPFOLDER
 
 WORKDIR ${APPFOLDER}
 
+COPY requirements.txt .
 RUN apk add --update --no-cache --virtual .tmp \
       gcc \
       jpeg-dev \
