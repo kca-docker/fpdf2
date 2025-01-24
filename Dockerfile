@@ -6,24 +6,24 @@ ARG APPFOLDER=${BASEFOLDER}/${APP}
 
 
 
-FROM ${IMAGE} AS builder
+#FROM ${IMAGE} AS builder
 
-WORKDIR /app
+#WORKDIR /app
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+#ENV PYTHONDONTWRITEBYTECODE 1
+#ENV PYTHONUNBUFFERED 1
 
 ##RUN pip install --upgrade pip
 
 ##RUN apk add --no-cache jpeg-dev zlib-dev
 ##RUN apk add --no-cache --virtual .build-deps build-base linux-headers
 
-RUN apk add --no-cache \
-      py3-pillow \
-      py3-wheel
+#RUN apk add --no-cache \
+#      py3-pillow \
+#      py3-wheel
 
-COPY requirements.txt .
-RUN pip wheel --no-cache-dir --no-deps --wheel-dir /wheels -r requirements.txt
+#COPY requirements.txt .
+#RUN pip wheel --no-cache-dir --no-deps --wheel-dir /wheels -r requirements.txt
 
 
 
@@ -33,13 +33,7 @@ ARG APPFOLDER
 
 WORKDIR ${APPFOLDER}
 
-RUN apk add --no-cache \
-      py3-pillow \
-      py3-wheel
-
-COPY requirements.txt .
-COPY --from=builder /wheels /wheels
-RUN pip install --no-cache /wheels/*
+RUN apk add --no-cache py3-fpdf
 
 COPY *.py .
 
