@@ -18,6 +18,6 @@ RUN go build -ldflags="-s -w" -o app .
 FROM scratch
 
 COPY --from=builder /src/app /app
-COPY ppc_settings.json /ppc_settings.json
+#COPY *.json ./
 
 ENTRYPOINT ["/app"]
