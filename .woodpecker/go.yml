@@ -22,6 +22,7 @@ steps:
       repo: *repo
       tags: 
         - 'go'
+        - 'go-0.0.1'
       registry: *dhub
       logins:
         - registry: *dhub
