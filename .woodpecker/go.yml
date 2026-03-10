@@ -11,7 +11,7 @@ steps:
       - event: [push]
         branch: main
         path:
-          include: ['Dockerfile', 'requirements.txt', 'run.py', '.woodpecker/dockerhub_deploy.yml']
+          include: ['go/Dockerfile', 'go/main.go', '.woodpecker/go.yml']
       - event: [cron, manual]
         branch: main
     image: woodpeckerci/plugin-docker-buildx
@@ -21,8 +21,7 @@ steps:
       dry_run: false
       repo: *repo
       tags: 
-        - 'latest'
-        - '0.0.2'
+        - 'go'
       registry: *dhub
       logins:
         - registry: *dhub
