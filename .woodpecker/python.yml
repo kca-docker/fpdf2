@@ -1,6 +1,6 @@
 ---
 variables:
-  file: &file Dockerfile
+  file: &file python/Dockerfile
   arch: &arch linux/amd64,linux/386,linux/arm/v7,linux/arm64/v8
   dhub: &dhub https://index.docker.io/v1/
   repo: &repo bksolutions/fpdf2
@@ -16,12 +16,13 @@ steps:
         branch: main
     image: woodpeckerci/plugin-docker-buildx
     settings:
-      dockerfile: Python/*file
+      dockerfile: *file
       platforms: *arch
       dry_run: false
       repo: *repo
       tags: 
         - 'latest'
+        - 'go'
         - '0.0.2'
       registry: *dhub
       logins:
