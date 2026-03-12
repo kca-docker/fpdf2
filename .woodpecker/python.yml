@@ -16,14 +16,14 @@ steps:
         branch: main
     image: woodpeckerci/plugin-docker-buildx
     settings:
+      context: python
       dockerfile: *file
       platforms: *arch
       dry_run: false
       repo: *repo
       tags: 
         - 'latest'
-        - 'go'
-        - '0.0.2'
+        - 'py-0.0.2'
       registry: *dhub
       logins:
         - registry: *dhub
