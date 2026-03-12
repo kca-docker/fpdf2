@@ -16,6 +16,7 @@ steps:
         branch: main
     image: woodpeckerci/plugin-docker-buildx
     settings:
+      context: go
       dockerfile: *file
       platforms: *arch
       dry_run: false
