@@ -13,11 +13,12 @@ RUN go mod init json2pdf 2>/dev/null || true
 RUN go get codeberg.org/go-pdf/fpdf
 
 RUN go build -ldflags="-s -w" -o app .
+Run ls -la
 
 # --- Runtime Stage (FROM scratch) ---------------------------------------------
 FROM scratch
 
-COPY --from=builder /src/app /app
+COPY --from=builder /src/* /app
 #COPY *.json ./
 
 ENTRYPOINT ["/app"]
