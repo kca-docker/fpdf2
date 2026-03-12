@@ -12,8 +12,9 @@ RUN go mod init json2pdf 2>/dev/null || true
 # Offiziell gepflegter Fork (Codeberg)
 RUN go get codeberg.org/go-pdf/fpdf
 
+RUN ls -la
 RUN go build -ldflags="-s -w" -o app .
-Run ls -la
+RUN ls -la
 
 # --- Runtime Stage (FROM scratch) ---------------------------------------------
 FROM scratch
